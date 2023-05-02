@@ -94,7 +94,7 @@ def fit_function(x, *p):
     Returns:
         float: The calcalated result used for `curve_fit` to update  parameters of the exponential distribution, i.e., the `y`.
     """    
-    return p[0] * np.exp(-x / p[1])
+    return p[0] * np.exp(-x / p[1]) + p[2]
 
 
 def ensure_normal_range(x0, x1, y0, y1):
@@ -158,7 +158,7 @@ def fake_fit_curve():
     x_list_selection = np.array(x_list_selection)
     y_list_selection = np.array(y_list_selection)
 
-    p0 = [y_list_selection[0], x_list_selection[-1] - x_list_selection[0]]
+    p0 = [y_list_selection[0], x_list_selection[-1] - x_list_selection[0], ,min(y_list_selection)]
     popt, pconv, infodict, mesg, ier = curve_fit(fit_function, x_list_selection, y_list_selection, p0=p0, full_output=True)
 
     tau = popt[1]
@@ -169,7 +169,7 @@ def fake_fit_curve():
     Element("result-area-1").write("%.4f" % (tau))
     Element("result-area-2").write("%.4f" % (tau * math.log(2)))
     Element("result-area-3").write("%.4f" % (1.0 / tau))
-    my_plot(xList, yList, x_for_line=x_list_selection, y_for_line=fit_function(x_list_selection, popt[0], popt[1]))
+    my_plot(xList, yList, x_for_line=x_list_selection, y_for_line=fit_function(x_list_selection, popt[0], popt[1], popt[2]))
 
 
 def fit_curve():
@@ -220,7 +220,7 @@ def fit_curve():
     Element("result-area-1").write("%.4f" % (tau))
     Element("result-area-2").write("%.4f" % (tau * math.log(2)))
     Element("result-area-3").write("%.4f" % (1.0 / tau))
-    my_plot(xList, yList, x_for_line=x_list_selection, y_for_line=fit_function(x_list_selection, popt[0], popt[1]), x_range=DataRange1d(start=x0, end=x1), y_range=DataRange1d(start=y0, end=y1))
+    my_plot(xList, yList, x_for_line=x_list_selection, y_for_line=fit_function(x_list_selection, popt[0], popt[1], popt[2]), x_range=DataRange1d(start=x0, end=x1), y_range=DataRange1d(start=y0, end=y1))
 
 
 def handle_csv_stringio(sIO):
