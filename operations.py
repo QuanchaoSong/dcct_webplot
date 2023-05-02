@@ -158,7 +158,7 @@ def fake_fit_curve():
     x_list_selection = np.array(x_list_selection)
     y_list_selection = np.array(y_list_selection)
 
-    p0 = [y_list_selection[0], x_list_selection[-1] - x_list_selection[0], ,min(y_list_selection)]
+    p0 = [y_list_selection[0], x_list_selection[-1] - x_list_selection[0], min(y_list_selection)]
     popt, pconv, infodict, mesg, ier = curve_fit(fit_function, x_list_selection, y_list_selection, p0=p0, full_output=True)
 
     tau = popt[1]
